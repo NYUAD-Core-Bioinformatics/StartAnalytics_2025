@@ -1,61 +1,27 @@
-FROM centos:8
-ARG linux/amd64
-ARG CONDA_VERSION="latest"
-ARG CONDA_DIR="/opt/conda"
+FROM continuumio/miniconda3:latest
 
+ARG CONDA_DIR="/opt/conda"
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 ENV PATH="/opt/conda/bin:$PATH"
 
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
-RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
-
-# Install some utilities
-RUN dnf -y install \
-	file \
-	git \
-	sssd-client \
-	which \
-	wget \
-	unzip \
-	vim \
-	bash
-
-
-RUN echo "*** install Miniconda ***" && \
-    wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p "${CONDA_DIR}" && \
-    rm ~/miniconda.sh && \
-    /opt/conda/bin/conda clean -tipy && \
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
-
-RUN echo "*** setup Miniconda ***" && \
-    conda update --all --yes && \
-    conda install -n base conda-libmamba-solver && \
-    conda config --set solver libmamba && \
-    conda config --set auto_update_conda False
+RUN conda install -y mamba -n base -c conda-forge 
 
 COPY ./env/environment.yml .
 
-RUN echo "*** setup conda env ***" && \
-    conda env create -n startanalytics_2025 --file environment.yml && \
+RUN echo "*** Setting up Conda environment ***" && \
+    mamba env create -n startanalytics_2025 --file environment.yml && \
     echo "conda activate startanalytics_2025" >> ~/.bashrc && \
+    conda clean -afy && \
     rm environment.yml
 
-ADD  ./notebooks /opt/
-ADD  ./notebooks/data /opt/notebooks/data
-WORKDIR /opt/notebooks
+RUN conda run -n startanalytics_2025 R -e "IRkernel::installspec(user = FALSE)"
 
+ADD ./notebooks /opt/notebooks
+ADD ./notebooks/data /opt/notebooks/data
+
+WORKDIR /opt/notebooks
+EXPOSE 8888
 
 SHELL ["conda", "run", "-n", "startanalytics_2025", "/bin/bash", "-c"]
-
-# Register IRkernel with Jupyter
-RUN R -e "IRkernel::installspec(user = FALSE)"
-
-# Set the Conda environment as default
-ENV CONDA_DEFAULT_ENV=startanalytics_2025
-EXPOSE 8888
-# CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--config=/root/.jupyter/jupyter_notebook_config.py"]
-
-CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''",  "--no-browser"]
+CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''", "--no-browser"]
