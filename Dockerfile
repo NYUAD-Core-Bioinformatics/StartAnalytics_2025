@@ -44,7 +44,7 @@ RUN echo "*** setup conda env ***" && \
     rm environment.yml
 
 ADD  ./notebooks /opt/
-ADD  ./notebooks/data /opt/notebooks
+ADD  ./notebooks/data /opt/notebooks/data
 WORKDIR /opt/notebooks
 
 
