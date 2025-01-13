@@ -55,22 +55,9 @@ SHELL ["conda", "run", "-n", "startanalytics_2025", "/bin/bash", "-c"]
 # Register IRkernel with Jupyter
 RUN R -e "IRkernel::installspec(user = FALSE)"
 
-# Install additional R packages if needed
-# RUN R -e "install.packages(c('ggplot2', 'dplyr', 'tidyverse'), repos='https://cran.r-project.org')"
-
 # Set the Conda environment as default
 ENV CONDA_DEFAULT_ENV=startanalytics_2025
-
-# Expose port for JupyterLab
-
-RUN jupyter notebook --generate-config
-RUN echo "c.NotebookApp.token = ''" >> /root/.jupyter/jupyter_notebook_config.py && \
-    echo "c.NotebookApp.password = ''" >> /root/.jupyter/jupyter_notebook_config.py && \
-    echo "c.NotebookApp.allow_origin = '*'" >> /root/.jupyter/jupyter_notebook_config.py && \
-    echo "c.NotebookApp.ip = '0.0.0.0'" >> /root/.jupyter/jupyter_notebook_config.py && \
-    echo "c.NotebookApp.open_browser = False" >> /root/.jupyter/jupyter_notebook_config.py
-
 EXPOSE 8888
-CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--config=/root/.jupyter/jupyter_notebook_config.py"]
+# CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--config=/root/.jupyter/jupyter_notebook_config.py"]
 
-# CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
+CMD ["conda", "run", "-n", "startanalytics_2025", "jupyter-lab", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''",  "--no-browser"]
