@@ -1,0 +1,19 @@
+name: startanalytics_2025
+channels:
+  - conda-forge
+  - r
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - seaborn
+  - jupyterlab
+  - r-base
+  - r-irkernel 
+  - r-ggplot2 
+  - r-pheatmap
+  - r-ggplot2
+  - r-dplyr
+  - r-tidyverse
