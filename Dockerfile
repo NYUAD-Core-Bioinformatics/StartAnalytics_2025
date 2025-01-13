@@ -43,10 +43,7 @@ RUN echo "*** setup conda env ***" && \
     echo "conda activate startanalytics_2025" >> ~/.bashrc && \
     rm environment.yml
 
-
-RUN mkdir -p /opt/notebooks
 ADD  ./notebooks /opt/
-
 WORKDIR /opt/notebooks
 
 
