@@ -1,4 +1,5 @@
 FROM continuumio/miniconda3:latest
+ARG linux/amd64
 
 ARG CONDA_DIR="/opt/conda"
 ENV LANG=C.UTF-8
