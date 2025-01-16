@@ -5,7 +5,7 @@ data analysis with Python and R for beginners
 
 The docker can be built and run using 
 ```bash
-bash utils/build_docker.sh
+bash utils/build_and_run_docker.sh
 ```
 
 You can then open the notebook using :
