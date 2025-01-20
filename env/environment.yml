@@ -12,8 +12,7 @@ dependencies:
   - jupyterlab
   - r-base
   - r-irkernel 
-  - r-ggplot2 
-  - r-pheatmap
-  - r-ggplot2
-  - r-dplyr
   - r-tidyverse
+  - r-gridExtra
+  - r-reshape2
+  - r-pheatmap
