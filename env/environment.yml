@@ -11,8 +11,10 @@ dependencies:
   - seaborn
   - jupyterlab
   - r-base
+  - r-ggplot2 
   - r-irkernel 
   - r-tidyverse
   - r-gridExtra
   - r-reshape2
   - r-pheatmap
+  - r-ggplot3
