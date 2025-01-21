@@ -6,7 +6,7 @@ In this workshop, we will be using Docker to create a consistent and isolated en
 ### Step 1: Install Docker
 
 1. [Download and install Docker Desktop](https://www.docker.com) for your operating system (Windows/macOS/Linux).
-2. After installation, verify Docker is running by opening a terminal and typing:
+2. Launch the docker application on your laptop.
 
 
 ### Step 2: Download the Workshop Image
