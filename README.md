@@ -5,7 +5,7 @@ In this workshop, we will be using Docker to create a consistent and isolated en
 
 ### Step 1: Install Docker
 
-1. Download and install Docker Desktop for your operating system (Windows/macOS/Linux).
+1. [Download and install Docker Desktop](https://www.docker.com) for your operating system (Windows/macOS/Linux).
 2. After installation, verify Docker is running by opening a terminal and typing:
 
 
@@ -27,3 +27,11 @@ docker run -p 8889:8888 nyuadcorebio/jupyterlab-workshop:latest
 
 2. Open the browser and go to 
 [http://localhost:8889/lab](http://localhost:8889/lab)
+
+
+### In case you'd rather build the image yourself 
+1. Clone the repo ```git clone https://github.com/NYUAD-Core-Bioinformatics/StartAnalytics_2025.git```
+2. build and run the image using 
+ ```bash
+ bash utils/build_and_run_docker.sh
+```
