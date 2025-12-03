@@ -1,6 +1,15 @@
 FROM continuumio/miniconda3:latest
 ARG linux/amd64
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        texlive-xetex \
+        texlive-fonts-recommended \
+        texlive-plain-generic \
+        ghostscript && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 ARG CONDA_DIR="/opt/conda"
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
